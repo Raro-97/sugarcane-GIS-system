@@ -1,0 +1,709 @@
+/*==================================================
+GLOBAL
+==================================================*/
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#eef3ef;
+    color:#333;
+    overflow-x:hidden;
+}
+
+/*==================================================
+HEADER
+==================================================*/
+
+header{
+    height:65px;
+    background:linear-gradient(90deg,#1B5E20,#2E7D32);
+    color:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 25px;
+    box-shadow:0 3px 10px rgba(0,0,0,.2);
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.brand i{
+    font-size:34px;
+    color:#AED581;
+}
+
+.brand h2{
+    font-size:20px;
+}
+
+.brand span{
+    font-size:12px;
+}
+
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.status{
+    color:#C6FF00;
+    font-weight:bold;
+}
+
+/*==================================================
+HERO
+==================================================*/
+
+.hero{
+    height:170px;
+    background:
+    linear-gradient(rgba(0,60,0,.55),rgba(0,60,0,.55)),
+    url("https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1600");
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:white;
+}
+
+.hero h1{
+    font-size:28px;
+    margin-bottom:10px;
+}
+
+.hero p{
+    font-size:17px;
+}
+
+/*==================================================
+SEARCH
+==================================================*/
+
+.search-container{
+    background:white;
+    display:flex;
+    justify-content:center;
+    gap:18px;
+    flex-wrap:wrap;
+    padding:15px;
+    box-shadow:0 2px 8px rgba(0,0,0,.15);
+}
+
+.search-box{
+    display:flex;
+    gap:10px;
+}
+
+.search-box input{
+    width:230px;
+    padding:10px;
+    border-radius:6px;
+    border:1px solid #ccc;
+}
+
+.search-box button{
+    padding:10px 18px;
+    border:none;
+    border-radius:6px;
+    background:#2E7D32;
+    color:white;
+    cursor:pointer;
+}
+
+/*==================================================
+CARDS
+==================================================*/
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    padding:15px 20px;
+}
+
+.card{
+    background:white;
+    border-radius:12px;
+    padding:18px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    box-shadow:0 3px 12px rgba(0,0,0,.12);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-3px);
+}
+
+.icon{
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    font-size:24px;
+}
+
+.growers .icon{
+    background:#1976D2;
+}
+
+.parcels .icon{
+    background:#43A047;
+}
+
+.hectares .icon{
+    background:#FB8C00;
+}
+
+.yield .icon{
+    background:#8E24AA;
+}
+
+.card h2{
+    font-size:22px;
+}
+
+.card span{
+    font-size:14px;
+    color:#666;
+}
+
+/*==================================================
+LAYOUT
+==================================================*/
+
+.dashboard-content{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:15px;
+    padding:0 20px 20px;
+}
+
+.map-panel,
+.analytics-card{
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 3px 12px rgba(0,0,0,.12);
+}
+
+.analytics-panel{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.panel-title{
+    background:#2E7D32;
+    color:white;
+    padding:12px 15px;
+    font-size:17px;
+    font-weight:bold;
+}
+
+.panel-title i{
+    margin-right:6px;
+}
+
+/*==================================================
+MAP
+==================================================*/
+
+#map{
+    width:100%;
+    height:500px;
+}
+
+/*==================================================
+ANALYTICS
+==================================================*/
+
+.analytics-card{
+    padding:15px;
+}
+
+.analytics-card h3{
+    color:#2E7D32;
+    margin-bottom:10px;
+    font-size:18px;
+}
+
+.analytics-card canvas{
+    width:100%!important;
+    height:170px!important;
+}
+
+.summary-card{
+    padding-bottom:10px;
+}
+
+#summary{
+    line-height:1.7;
+    font-size:15px;
+}
+
+/*==================================================
+LEGEND
+==================================================*/
+
+.legend{
+    background:white;
+    padding:10px;
+    border-radius:8px;
+    box-shadow:0 2px 8px rgba(0,0,0,.25);
+    line-height:22px;
+    font-size:13px;
+}
+
+.legend h4{
+    margin-bottom:6px;
+    color:#2E7D32;
+}
+
+.legend span{
+    display:inline-block;
+    width:16px;
+    height:16px;
+    margin-right:8px;
+    border:1px solid #555;
+}
+
+.legend-green{
+    background:#81C784;
+}
+
+.legend-yellow{
+    background:#FFEB3B;
+}
+
+/*==================================================
+RESPONSIVE
+==================================================*/
+
+@media(max-width:1200px){
+
+.cards{
+    grid-template-columns:repeat(2,1fr);
+}
+
+.dashboard-content{
+    grid-template-columns:1fr;
+}
+
+#map{
+    height:450px;
+}
+
+}
+
+@media(max-width:768px){
+
+header{
+    flex-direction:column;
+    height:auto;
+    padding:15px;
+    gap:10px;
+}
+
+.hero{
+    height:140px;
+}
+
+.hero h1{
+    font-size:24px;
+}
+
+.hero p{
+    font-size:14px;
+}
+
+.search-box{
+    width:100%;
+    flex-direction:column;
+}
+
+.search-box input{
+    width:100%;
+}
+
+.cards{
+    grid-template-columns:1fr;
+}
+
+#map{
+    height:400px;
+}
+
+.analytics-card canvas{
+    height:150px!important;
+}
+
+}
+/*==================================================
+PARCEL STATUS BADGES
+==================================================*/
+
+.statusBadge{
+
+    display:inline-block;
+
+    padding:6px 14px;
+
+    border-radius:20px;
+
+    color:white;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+    margin-left:6px;
+
+}
+
+.statusBadge.growing{
+
+    background:#43A047;
+
+}
+
+.statusBadge.mature{
+
+    background:#F9A825;
+
+}
+
+.statusBadge.harvested{
+
+    background:#1E88E5;
+
+}
+/*==================================================
+FILTER SIDEBAR
+==================================================*/
+
+.map-section{
+
+    display:grid;
+
+    grid-template-columns:300px 1fr;
+
+    gap:20px;
+
+    align-items:start;
+
+}
+
+.filter-panel{
+
+    background:#ffffff;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    box-shadow:0 6px 18px rgba(0,0,0,.15);
+
+    position:sticky;
+
+    top:95px;
+
+}
+
+.filter-body{
+
+    padding:20px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:14px;
+
+}
+
+.filter-body label{
+
+    font-weight:bold;
+
+    color:#2E7D32;
+
+    font-size:15px;
+
+}
+
+.filter-body select{
+
+    padding:10px 12px;
+
+    border:1px solid #cfcfcf;
+
+    border-radius:8px;
+
+    background:white;
+
+    font-size:15px;
+
+    transition:.3s;
+
+}
+
+.filter-body select:focus{
+
+    outline:none;
+
+    border-color:#2E7D32;
+
+    box-shadow:0 0 8px rgba(46,125,50,.2);
+
+}
+
+.filter-body button{
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    transition:.3s;
+
+}
+
+#applyFilters{
+
+    background:#2E7D32;
+
+    color:white;
+
+}
+
+#applyFilters:hover{
+
+    background:#1B5E20;
+
+}
+
+#resetFilters{
+
+    background:#e0e0e0;
+
+    color:#333;
+
+}
+
+#resetFilters:hover{
+
+    background:#cfcfcf;
+
+}
+
+/*==================================================
+RESPONSIVE FILTER PANEL
+==================================================*/
+
+@media(max-width:1200px){
+
+    .map-section{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .filter-panel{
+
+        position:relative;
+
+        top:0;
+
+    }
+
+}
+/*==================================================
+PARCEL TABLE
+==================================================*/
+
+.table-section{
+
+    margin:25px;
+    background:white;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+
+}
+
+.table-section .panel-title{
+
+    font-size:18px;
+
+}
+
+#parcelTable{
+
+    width:100%;
+    border-collapse:collapse;
+
+}
+
+#parcelTable thead{
+
+    background:#1B5E20;
+    color:white;
+
+}
+
+#parcelTable th{
+
+    padding:15px;
+    font-size:15px;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+
+}
+
+#parcelTable td{
+
+    padding:14px;
+    border-bottom:1px solid #ececec;
+
+}
+
+#parcelTable tbody tr{
+
+    transition:.25s;
+
+}
+
+#parcelTable tbody tr:nth-child(even){
+
+    background:#fafafa;
+
+}
+
+#parcelTable tbody tr:hover{
+
+    background:#E8F5E9;
+    transform:scale(1.01);
+    cursor:pointer;
+
+}
+
+#parcelTable tbody tr.selected{
+
+    background:#C8E6C9;
+    font-weight:bold;
+
+}
+
+.card{
+
+    cursor:pointer;
+    transition:.3s;
+
+}
+
+.card:hover{
+
+    transform:translateY(-5px);
+    box-shadow:0 10px 25px rgba(0,0,0,.18);
+
+}
+
+.card h2{
+
+    color:#1B5E20;
+    font-size:30px;
+
+}
+
+.card span{
+
+    font-size:15px;
+}
+#parcelInfo{
+
+    line-height:1.9;
+    font-size:14px;
+
+}
+
+#parcelInfo p{
+
+    padding:6px 0;
+    border-bottom:1px solid #ececec;
+
+}
+
+#parcelInfo strong{
+
+    color:#2E7D32;
+
+}
+.analytics-card{
+
+    transition:.3s;
+
+}
+
+.analytics-card:hover{
+
+    transform:translateY(-3px);
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+
+}
+.filter-panel{
+
+    border-top:5px solid #2E7D32;
+
+}
+
+.filter-body button{
+
+    transition:.25s;
+
+}
+
+.filter-body button:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.filter-body select{
+
+    background:#fafafa;
+
+}
+.table-section{
+
+    max-height:500px;
+    overflow:auto;
+
+}
