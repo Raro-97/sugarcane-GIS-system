@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sugarcane Plantation Management System</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
+    <!-- Dashboard CSS -->
+    <link rel="stylesheet"
+          href="css/dashboard.css"/>
+
+</head>
+
+<body>
+
+<!-- =========================================
+HEADER
+========================================= -->
+
+<header>
+
+    <div class="brand">
+
+        <i class="fa-solid fa-seedling"></i>
+
+        <div>
+
+            <h2>Sugarcane GIS</h2>
+
+            <span>Enterprise Plantation Management System</span>
+
+        </div>
+
+    </div>
+
+    <div class="header-right">
+
+        <div class="status">
+
+            <i class="fa-solid fa-circle"></i>
+
+            System Online
+
+        </div>
+
+        <div id="datetime">
+
+            Loading...
+
+        </div>
+
+        <div class="user">
+
+            <i class="fa-solid fa-user-circle"></i>
+
+            Administrator
+
+        </div>
+
+    </div>
+
+</header>
+
+<!-- =========================================
+HERO
+========================================= -->
+
+<section class="hero">
+
+    <div class="hero-overlay">
+
+        <h1>
+
+            Sugarcane Plantation Management System
+
+        </h1>
+
+        <p>
+
+            Enterprise GIS platform for growers,
+            parcels,
+            harvesting,
+            production monitoring
+            and reporting.
+
+        </p>
+
+    </div>
+
+</section>
+
+<!-- =========================================
+SEARCH
+========================================= -->
+
+<section class="search-container">
+
+    <div class="search-box">
+
+        <input
+            type="number"
+            id="parcelSearch"
+            placeholder="Search Parcel ID">
+
+        <button id="searchBtn">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            Search Parcel
+
+        </button>
+
+    </div>
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="growerSearch"
+            placeholder="Search Grower Name">
+
+        <button id="growerBtn">
+
+            <i class="fa-solid fa-users"></i>
+
+            Search Grower
+
+        </button>
+
+    </div>
+
+</section>
+
+<!-- =========================================
+KPI CARDS
+========================================= -->
+
+<section class="cards">
+
+    <div class="card growers">
+
+        <div class="icon">
+
+            <i class="fa-solid fa-users"></i>
+
+        </div>
+
+        <div>
+
+            <h2 id="growers">0</h2>
+
+            <span>Total Growers</span>
+
+        </div>
+
+    </div>
+
+    <div class="card parcels" id="parcelCard">
+
+        <div class="icon">
+
+            <i class="fa-solid fa-draw-polygon"></i>
+
+        </div>
+
+        <div>
+
+            <h2 id="parcels">0</h2>
+
+            <span>Total Parcels</span>
+
+        </div>
+
+    </div>
+
+    <div class="card hectares">
+
+        <div class="icon">
+
+            <i class="fa-solid fa-ruler-combined"></i>
+
+        </div>
+
+        <div>
+
+            <h2 id="hectares">0</h2>
+
+            <span>Total Hectares</span>
+
+        </div>
+
+    </div>
+
+    <div class="card yield">
+
+        <div class="icon">
+
+            <i class="fa-solid fa-tractor"></i>
+
+        </div>
+
+        <div>
+
+            <h2 id="yield">0</h2>
+
+            <span>Estimated Production (Tonnes)</span>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================================
+MAIN DASHBOARD
+========================================= -->
+
+<section class="dashboard-content">
+
+    <!-- LEFT SIDE -->
+
+    <div class="map-section">
+
+        <!-- FILTER SIDEBAR -->
+
+        <div class="filter-panel">
+
+            <div class="panel-title">
+
+                <i class="fa-solid fa-filter"></i>
+
+                Parcel Filters
+
+            </div>
+
+            <div class="filter-body">
+
+                <label>Variety</label>
+
+                <select id="filterVariety">
+                    <option value="">All Varieties</option>
+                </select>
+
+                <label>Status</label>
+
+                <select id="filterStatus">
+                    <option value="">All Status</option>
+                </select>
+
+                <label>Village</label>
+
+                <select id="filterVillage">
+                    <option value="">All Villages</option>
+                </select>
+
+                <label>Grower</label>
+
+                <select id="filterGrower">
+                    <option value="">All Growers</option>
+                </select>
+
+                <label>Ratoon Cycle</label>
+
+                <select id="filterRatoon">
+                    <option value="">All Ratoon Cycles</option>
+                </select>
+
+                <button id="applyFilters">
+
+                    <i class="fa-solid fa-filter"></i>
+
+                    Apply Filters
+
+                </button>
+
+                <button id="resetFilters">
+
+                    <i class="fa-solid fa-rotate-left"></i>
+
+                    Reset Filters
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- MAP PANEL -->
+
+        <div class="map-panel">
+
+            <div class="panel-title">
+
+                <i class="fa-solid fa-map-location-dot"></i>
+
+                Plantation Map
+
+            </div>
+
+            <div id="map"></div>
+
+        </div>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+
+    <div class="analytics-panel">
+
+        <div class="panel-title">
+
+            <i class="fa-solid fa-chart-column"></i>
+
+            Live Analytics
+
+        </div>
+
+        <!-- Harvest Chart -->
+
+        <div class="analytics-card">
+
+            <h3>Harvest Status</h3>
+
+            <canvas id="statusChart"></canvas>
+
+        </div>
+
+        <!-- Variety Chart -->
+
+        <div class="analytics-card">
+
+            <h3>Variety Distribution</h3>
+
+            <canvas id="varietyChart"></canvas>
+
+        </div>
+
+        <!-- Parcel Information -->
+
+        <div class="analytics-card">
+
+            <h3>
+
+                <i class="fa-solid fa-circle-info"></i>
+
+                Parcel Information
+
+            </h3>
+
+            <div id="parcelInfo">
+
+                <p>Select a parcel on the map.</p>
+
+            </div>
+
+        </div>
+
+        <!-- System Summary -->
+
+        <div class="analytics-card summary-card">
+
+            <h3>System Summary</h3>
+
+            <div id="summary">
+
+                <p><strong>Total Growers:</strong> <span id="sumGrowers">0</span></p>
+
+                <p><strong>Total Parcels:</strong> <span id="sumParcels">0</span></p>
+
+                <p><strong>Total Hectares:</strong> <span id="sumHectares">0</span></p>
+
+                <p><strong>Estimated Production:</strong> <span id="sumYield">0</span> Tonnes</p>
+
+                <p><strong>Largest Variety:</strong> <span id="topVariety">-</span></p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================================
+PARCEL TABLE
+========================================= -->
+
+<section class="table-section">
+
+    <div class="panel-title">
+
+        <i class="fa-solid fa-table"></i>
+
+        Parcel Register
+
+    </div>
+
+    <table id="parcelTable">
+
+        <thead>
+
+            <tr>
+
+                <th>Parcel</th>
+
+                <th>Grower</th>
+
+                <th>Village</th>
+
+                <th>Variety</th>
+
+                <th>Status</th>
+
+                <th>Area (Ha)</th>
+
+                <th>Yield</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        </tbody>
+
+    </table>
+
+</section>
+<!-- =========================================
+LIBRARIES
+========================================= -->
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- =========================================
+PROJECT JAVASCRIPT
+========================================= -->
+
+<script src="js/map.js"></script>
+
+<script src="js/search.js"></script>
+
+<script src="js/growers.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/filters.js"></script>
+<script src="js/dashboard.js"></script>
+
+</body>
+
+</html>
